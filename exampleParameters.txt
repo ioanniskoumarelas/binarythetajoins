@@ -1,0 +1,90 @@
+*** Data Generation ***
+
+** RANGE
+executionMode=dataGeneration
+generatorSeed=0
+generatorMode=range
+from=1
+to=100
+valueReplication=1
+datasetDirectory=datasets/synthetic_1_100_1
+
+** DISTRIBUTION
+(distribution=UNIFORM or GAUSSIAN or ZIPF)
+
+executionMode=dataGeneration
+generatorSeed=0
+generatorMode=distribution
+from=1
+to=100
+sizeS=100
+sizeT=100
+distribution=UNIFORM
+datasetDirectory=datasets/synthetic_1_100_UNIFORM_100_100
+
+*** Histograms ***
+
+executionMode=histograms
+buckets=100
+samplingRatio=100%
+dataset=datasets/synthetic_1_100_1/files
+datasetSizes=datasets/synthetic_1_100_1/datasetSizes.csv
+histogramsDirectory=datasets/synthetic_1_100_1/100
+
+// histogramsDirectory = datasetsFolder + "/" + dataset + "/" + str(buckets);
+
+*** Real Partition Matrix ***
+
+executionMode=realPartitionMatrix
+buckets=100
+sparsity=1
+bands=10
+bandsOffsetSeed=1
+datasetDirectory=datasets/synthetic_1_100_1
+histogramsDirectory=datasets/synthetic_1_100_1/100
+partitionMatrixDirectory=datasets/synthetic_1_100_1/100/1_10_1
+
+// datasetDirectory = +datasetsFolder + "/" + dataset;
+// histogramsDirectory = datasetsFolder + "/" + dataset + "/" + str(buckets);
+// partitionMatrixDirectory = datasetsFolder+"/"+ dataset + "/" + str(buckets) + "/" + str(sparsity) + "_" + str(bands) + "_" + str(bandsOffsetSeed);
+
+*** Rearrangements ***
+
+executionMode=rearrangement
+rearrangementPolicy=BEA
+numReducers=2
+partitionMatrixDirectory=datasets/synthetic_1_100_1/100/1_1_1
+tspk=btj/tspk
+partitionMatrixRearrangedDirectory=datasets/synthetic_1_100_1/100/1_1_1/BEA
+
+// numReducers is only used for TSPk methods of rearrangement!
+
+// partitionMatrixRearrangedDirectory = partitionMatrixDirectory + "/" + rearrangementPolicy;
+
+*** Partitioning ***
+
+executionMode=partitioning
+numReducers=2
+partitioningPolicy=AICGS
+partitionMatrixDirectory=datasets/synthetic_1_100_1/100/1_1_1/
+partitioningDirectory=datasets/synthetic_1_100_1/100/1_1_1/AICGS_2
+
+partitionMatrixDirectory=datasets/synthetic_1_100_1/10/1_10_1/BEA
+partitioningDirectory=datasets/synthetic_1_100_1/10/1_10_1/BEA/AICGS_2
+
+// partitioningDirectory = partitionMatrixRearrangedDirectory + "/" + partitioningPolicy + "_" + str(numReducers);
+
+*** MBucketI ***
+
+executionMode=MBucketI
+numReducers=2
+jobMaxExecutionHours=1
+datasetDirectory=datasets/synthetic_1_100_1
+boundaries=datasets/synthetic_1_100_1/100/1_1_1/boundaries.csv
+properties=datasets/synthetic_1_100_1/100/1_1_1/properties.csv
+indexToReducersMapping=datasets/synthetic_1_100_1/100/1_1_1/MRI_2/indexToReducersMapping.csv
+mBucketIDirectory=datasets/synthetic_1_100_1/100/1_1_1/MRI_2/MBucketI
+
+
+indexToReducersMapping=datasets/synthetic_1_100_1/10/1_10_1/BEA/AICGS_2/indexToReducersMapping.csv
+mBucketIDirectory=datasets/synthetic_1_100_1/10/1_10_1/BEA/AICGS_2/MBucketI

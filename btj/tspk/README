@@ -1,0 +1,6 @@
+Now accepts comma separated values
+
+How to run:
+1) ./conv pm.txt pm.tsp numReducers #rows #columns
+2) ./concorde pm.tsp
+3) ./order1 pm.sol pm.txt reoderedPm.txt numReducers #rows #columns
